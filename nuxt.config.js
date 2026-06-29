@@ -1,5 +1,5 @@
 const apiRoot = process.env.APP_API_ROOT || 'https://src.clientforce.co'
-const prototypeMode = process.env.APP_PROTOTYPE_MODE === 'true' || process.env.VERCEL_GIT_COMMIT_REF === 'vercel-setup'
+const prototypeMode = process.env.APP_PROTOTYPE_MODE !== 'false'
 
 export default {
   ssr: false,
@@ -119,3 +119,4 @@ export default {
     },
   },
 }
+
