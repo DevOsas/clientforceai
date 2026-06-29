@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "private": true,
   "engines": {
-    "node": "18.x"
+    "node": "24.x"
   },
   "scripts": {
     "dev": "nuxt",
@@ -91,3 +91,4 @@
     "vue-jest": "^3.0.4"
   }
 }
+
