@@ -2,13 +2,11 @@
   "version": 2,
   "buildCommand": "npm run generate",
   "outputDirectory": "dist",
-  "routes": [
+  "cleanUrls": true,
+  "rewrites": [
     {
-      "handle": "filesystem"
-    },
-    {
-      "src": "/.*",
-      "dest": "/200.html"
+      "source": "/((?!.*\\.).*)",
+      "destination": "/200.html"
     }
   ]
 }
