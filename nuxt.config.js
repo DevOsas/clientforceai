@@ -1,12 +1,11 @@
 const apiRoot = process.env.APP_API_ROOT || 'https://src.clientforce.co'
+const prototypeMode = process.env.APP_PROTOTYPE_MODE === 'true' || process.env.VERCEL_GIT_COMMIT_REF === 'vercel-setup'
 
 export default {
-  // Disable server-side rendering (https://go.nuxtjs.dev/ssr-mode)
   ssr: false,
   target: 'static',
 
   server: {
-    // https://v2.nuxt.com/docs/features/configuration/#edit-host-and-port
     host: '0.0.0.0',
   },
 
@@ -16,7 +15,6 @@ export default {
     continuous: true,
   },
 
-  // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
     title: 'Clientforce',
     meta: [
@@ -27,10 +25,8 @@ export default {
     link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }],
   },
 
-  // Global CSS (https://go.nuxtjs.dev/config-css)
   css: ['assets/scss/index.scss', 'bootstrap-vue/dist/bootstrap-vue.css'],
 
-  // Plugins to run before rendering page (https://go.nuxtjs.dev/config-plugins)
   plugins: [
     '~/directives',
     '~/plugins/notifications',
@@ -39,27 +35,14 @@ export default {
     '~/plugins/global-components',
     '~/plugins/radial-progress',
     '~/plugins/vue-scroll',
+    '~/plugins/prototype-mode',
   ],
 
-  // Auto import components (https://go.nuxtjs.dev/config-components)
   components: false,
 
-  // Modules for dev and build (recommended) (https://go.nuxtjs.dev/config-modules)
-  buildModules: [
-    // ESLint disabled
-    // https://go.nuxtjs.dev/stylelint
-    // '@nuxtjs/stylelint-module',
-    '@nuxtjs/composition-api/module',
-  ],
+  buildModules: ['@nuxtjs/composition-api/module'],
 
-  // Modules (https://go.nuxtjs.dev/config-modules)
-  modules: [
-    // https://go.nuxtjs.dev/bootstrap
-    'bootstrap-vue/nuxt',
-    '@nuxtjs/svg',
-    '@nuxtjs/apollo',
-    '@nuxtjs/auth',
-  ],
+  modules: ['bootstrap-vue/nuxt', '@nuxtjs/svg', '@nuxtjs/apollo', '@nuxtjs/auth'],
 
   auth: {
     redirect: {
@@ -76,14 +59,11 @@ export default {
     cookie: {
       options: {
         path: '/',
-        // domain: apiRoot.substring(apiRoot.indexOf('.')),
       },
     },
     token: {
       property: 'token',
       global: true,
-      // Remove any domain specification here
-      // domain: 'localhost'
     },
   },
 
@@ -91,7 +71,6 @@ export default {
     fallback: '200.html',
   },
 
-  // Build Configuration (https://go.nuxtjs.dev/config-build)
   build: {
     transpile: ['@nuxtjs/auth'],
     extend(config) {
@@ -112,28 +91,21 @@ export default {
   publicRuntimeConfig: {
     APIRoot: apiRoot,
     formHost: process.env.APP_FORM_HOST,
+    prototypeMode,
   },
 
-  // Give apollo module options
   apollo: {
-    // Token name for the cookie which will be set in case of authentication
     tokenName: 'token',
-
-    // Sets the authentication type for any authorized request.
     authenticationType: 'Bearer',
-
     cookieAttributes: {
       expires: 7,
       path: '/',
-      // Only set domain in production
       domain:
         process.env.NODE_ENV === 'production'
           ? apiRoot.substring(apiRoot.indexOf('.'))
           : undefined,
-      // Use secure cookies only in production
       secure: process.env.NODE_ENV === 'production',
     },
-
     includeNodeModules: true,
     defaultOptions: {
       $query: {

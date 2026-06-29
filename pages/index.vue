@@ -1,7 +1,10 @@
 <script>
 export default {
-  middleware({ $auth, redirect }) {
-    // If the user is not authenticated
+  middleware({ $auth, $config, redirect }) {
+    if ($config.prototypeMode) {
+      return redirect({ name: 'prototype-dashboard' })
+    }
+
     if (!$auth.loggedIn) {
       return redirect({ name: 'login' })
     }

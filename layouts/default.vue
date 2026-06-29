@@ -8,11 +8,11 @@
     <Footer v-if="showFooter" />
 
     <notifications group="main" classes="main-notification" />
-    <LeadFinderModal />
-    <LeadCsvImportResultModal />
-    
-    <!-- AI Writing Agent -->
-    <FloatingWriterButton v-if="$auth.loggedIn" />
+    <template v-if="!prototypeMode">
+      <LeadFinderModal />
+      <LeadCsvImportResultModal />
+      <FloatingWriterButton v-if="$auth.loggedIn" />
+    </template>
   </div>
 </template>
 
@@ -30,7 +30,7 @@ export default {
 
   components: { Navbar, LeadFinderModal, LeadCsvImportResultModal },
 
-  setup(props, context) {
+  setup() {
     useEcho()
   },
 
@@ -38,6 +38,10 @@ export default {
     ...mapState('layout', {
       showFooter: (state) => state.showFooter,
     }),
+
+    prototypeMode() {
+      return this.$config.prototypeMode
+    },
   },
 }
 </script>
@@ -45,7 +49,7 @@ export default {
 <style lang="scss">
 .main-content {
   &.with-navbar {
-    padding-top: 70px !important; // Height of fixed navbar
+    padding-top: 70px !important;
   }
 }
 </style>
