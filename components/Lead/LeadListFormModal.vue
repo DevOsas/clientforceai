@@ -1,0 +1,179 @@
+<template>
+  <b-modal
+    id="LeadListFormModal"
+    size="md"
+    modal-class="lead-list-form-modal"
+    hide-header
+    hide-footer
+    centered
+    @hidden="handleOnHide"
+  >
+    <template #default="{ hide }">
+      <div class="lead-list-form-modal-header">
+        <h3 class="lead-list-form-modal-title">
+          {{ form.id ? 'Update list name' : 'Create new list' }}
+        </h3>
+        <b-button variant="link" class="close-btn" @click="hide()">
+          <SvgIcon name="close" />
+        </b-button>
+      </div>
+      <b-form
+        class="campaign-name-form"
+        method="POST"
+        @submit.prevent="saveList"
+        @keydown="form.onKeydown($event)"
+      >
+        <b-form-input
+          v-model="form.title"
+          size="md"
+          autofocus
+          placeholder="List name"
+          autocomplete="off"
+          required
+        />
+
+        <div class="text-right mt-4">
+          <b-button
+            variant="link"
+            class="text-muted mr-1 px-4"
+            pill
+            @click="hide"
+          >
+            Cancel
+          </b-button>
+
+          <b-button type="submit" variant="primary" class="px-4" pill>
+            <b-spinner v-if="form.busy" class="mr-1" small></b-spinner>
+            Save
+          </b-button>
+        </div>
+      </b-form>
+    </template>
+  </b-modal>
+</template>
+
+<script>
+import { SAVE_LEAD_LIST_MUTATION } from '~/graphql/lead/mutations'
+
+export default {
+  props: {
+    listItem: {
+      type: Object,
+      default: () => null,
+    },
+  },
+
+  data() {
+    return {
+      form: new this.$form({ id: 0, title: '' }),
+    }
+  },
+
+  watch: {
+    listItem(listItem) {
+      if (listItem) {
+        this.form.keys().forEach((key) => {
+          this.form[key] = listItem[key] ? listItem[key] : null
+        })
+      }
+    },
+  },
+
+  methods: {
+    async saveList(edited) {
+      this.form.busy = true
+      await this.$apollo
+        .mutate({
+          mutation: SAVE_LEAD_LIST_MUTATION,
+          variables: this.form.data(),
+        })
+        .then(({ data }) => {
+          this.form.busy = false
+          this.$emit('saved', data.leadlist)
+
+          this.$bvModal.hide('LeadListFormModal')
+        })
+        .catch(({ graphQLErrors: errors }) => {
+          this.form.busy = false
+
+          for (let i = 0; i < errors.length; i++) {
+            if (errors[i].message === 'validation') {
+              this.form.errors.set(errors[i].extensions.validation)
+            } else {
+              this.$notify({
+                group: 'main',
+                type: 'error',
+                title: 'Unable to save',
+                text: `${errors[i].message}`,
+              })
+            }
+          }
+        })
+    },
+
+    handleOnHide() {
+      this.form.reset()
+
+      this.$emit('closed')
+    },
+  },
+}
+</script>
+
+<style lang="scss">
+@import '~@/assets/scss/variables';
+
+.lead-list-form-modal {
+  .modal-content {
+    background-color: #f5f5f5;
+    box-shadow: none;
+    border: 0;
+  }
+  .modal-body {
+    padding: 40px 70px 40px;
+  }
+
+  .lead-list-form-modal-header {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .close-btn {
+      font-size: 32px;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+    }
+
+    .lead-list-form-modal-title {
+      background-color: $primary;
+      padding: 5px 40px;
+      color: $white;
+      border-radius: 5px;
+      margin-bottom: 25px;
+      font-size: 20px;
+    }
+  }
+
+  .campaign-name-form {
+    .form-control {
+      border-color: $gray-200;
+      box-shadow: 0 2px 5px 0 $gray-200;
+      border-radius: 0.3rem;
+
+      &:focus {
+        border-color: $primary;
+      }
+
+      &.is-invalid {
+        border-color: lighten($danger, 40);
+      }
+      &::placeholder {
+        color: $gray-400;
+      }
+    }
+  }
+}
+</style>

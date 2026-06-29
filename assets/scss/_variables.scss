@@ -1,0 +1,48 @@
+$font-family-sans-serif: 'Roboto', sans-serif, 'Apple Color Emoji',
+  'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+$enable-shadows: true;
+
+// Define the maximum width of `.container` for different screen sizes.
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1360px,
+  xxl: 1460px
+);
+
+$navbar-padding-y: 0;
+$navbar-dark-color: rgba(#fff, 0.8);
+
+$font-size-base: 0.95rem;
+$enable-responsive-font-sizes: true;
+
+$border-radius: 0.3rem;
+$border-radius-lg: 0.5rem;
+$border-radius-sm: 0.3rem;
+
+$input-focus-box-shadow: none;
+$input-box-shadow: none;
+
+$dropdown-border-color: transparent;
+$dropdown-box-shadow: 0 0 17px 0 rgba(23, 50, 68, 0.17);
+
+$btn-box-shadow: none;
+
+// $primary: #2ecb3a;
+$primary: #0ad855;
+$secondary: #ff4c4d;
+
+$modal-sm: 300px;
+$modal-md: 500px;
+$modal-lg: 1038px;
+$modal-xl: 1206px;
+
+$modal-content-border-radius: 20px;
+
+$modal-fade-transform: scale(0.8);
+
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';

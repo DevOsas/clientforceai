@@ -1,0 +1,93 @@
+{
+  "name": "clientforce-ui",
+  "version": "1.0.0",
+  "private": true,
+  "engines": {
+    "node": "18.x"
+  },
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate",
+    "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
+    "lint:style": "stylelint **/*.{vue,css} --ignore-path .gitignore",
+    "lint": "npm run lint:js && npm run lint:style",
+    "test": "jest"
+  },
+  "lint-staged": {
+    "*.{js,vue}": "eslint",
+    "*.{css,vue}": "stylelint"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "dependencies": {
+    "@nuxtjs/apollo": "^4.0.1-rc.5",
+    "@nuxtjs/auth": "^4.9.1",
+    "@nuxtjs/composition-api": "^0.33.1",
+    "@nuxtjs/svg": "^0.4.0",
+    "@tiptap/extension-color": "^2.0.3",
+    "@tiptap/extension-highlight": "^2.0.3",
+    "@tiptap/extension-image": "^2.0.3",
+    "@tiptap/extension-link": "^2.0.3",
+    "@tiptap/extension-placeholder": "^2.0.3",
+    "@tiptap/extension-table": "^2.0.3",
+    "@tiptap/extension-table-cell": "^2.0.3",
+    "@tiptap/extension-table-header": "^2.0.3",
+    "@tiptap/extension-table-row": "^2.0.3",
+    "@tiptap/extension-text-align": "^2.0.3",
+    "@tiptap/extension-text-style": "^2.0.3",
+    "@tiptap/extension-underline": "^2.0.3",
+    "@tiptap/pm": "^2.0.3",
+    "@tiptap/starter-kit": "^2.0.3",
+    "@tiptap/vue-2": "^2.0.3",
+    "apollo-link-error": "^1.1.13",
+    "bootstrap": "^4.5.3",
+    "bootstrap-vue": "^2.19.0",
+    "core-js": "^3.6.5",
+    "echarts": "^5.4.2",
+    "graphql-tag": "^2.12.6",
+    "laravel-echo": "^1.15.1",
+    "lodash": "^4.17.21",
+    "markdown-it": "^14.1.0",
+    "moment": "^2.29.1",
+    "nuxt": "^2.16.3",
+    "prosemirror-utils": "^0.9.6",
+    "pusher-js": "^8.2.0",
+    "sweetalert2": "^10.10.1",
+    "vform": "^1.0.1",
+    "vue-drag-select": "^0.2.0",
+    "vue-echarts": "^6.6.9",
+    "vue-notification": "^1.3.20",
+    "vue-radial-progress": "^0.3.2",
+    "vue-select": "^3.20.2",
+    "vuedraggable": "^2.24.3",
+    "vuescroll": "^4.17.2"
+  },
+  "devDependencies": {
+    "@nuxtjs/eslint-config": "^3.1.0",
+    "@nuxtjs/eslint-module": "^2.0.0",
+    "@nuxtjs/stylelint-module": "^4.0.0",
+    "@vue/test-utils": "^1.1.0",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^26.5.0",
+    "eslint": "^7.10.0",
+    "eslint-config-prettier": "^6.12.0",
+    "eslint-plugin-nuxt": "^1.0.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "husky": "^4.3.0",
+    "jest": "^26.5.0",
+    "lint-staged": "^10.4.0",
+    "prettier": "^2.1.2",
+    "sass": "^1.29.0",
+    "sass-loader": "^10.1.0",
+    "stylelint": "^13.7.2",
+    "stylelint-config-prettier": "^8.0.2",
+    "stylelint-config-standard": "^20.0.0",
+    "vue-jest": "^3.0.4"
+  }
+}

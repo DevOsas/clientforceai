@@ -1,0 +1,16 @@
+version: 0.0
+os: linux
+files:
+  - source: /
+    destination: /var/www/clientforce-ui
+permissions:
+  - object: /var/www/clientforce-ui
+    pattern: "**"
+    owner: ubuntu
+    group: ubuntu
+    mode: 755
+hooks:
+  BeforeInstall:
+    - location: scripts/prep.sh
+  AfterInstall:
+    - location: scripts/rebuild.sh

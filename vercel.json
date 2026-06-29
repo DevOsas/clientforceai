@@ -1,0 +1,14 @@
+{
+  "version": 2,
+  "buildCommand": "npm run generate",
+  "outputDirectory": "dist",
+  "routes": [
+    {
+      "handle": "filesystem"
+    },
+    {
+      "src": "/.*",
+      "dest": "/200.html"
+    }
+  ]
+}
